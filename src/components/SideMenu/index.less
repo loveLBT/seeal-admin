@@ -1,0 +1,135 @@
+.side_menu {
+    position: relative;
+    background-color: #fff;
+    padding: 10px 0;
+    float: left;
+    transition: .3s;
+    height: 100%;
+    ul.menu {
+    	padding-bottom: 20px;
+    	margin: 0;
+    	&:hover {
+    		.active {
+    			background-color: #fff;
+    			a {
+    				color: @text-color;
+    			}
+    			img {
+		    		&.s {
+		    			display: inline-block;
+		    		}
+		    		&.h {
+		    			display: none;
+		    		}
+		    	}
+    		}
+    	}
+    	> li {
+    		position: relative;
+    		font-size: 16px;
+    		display: flex;
+    		flex-direction: row;
+    		align-items: center;
+    		padding: 0 30px;
+    		height: 46px;
+    		transition: .3s;
+		    white-space: nowrap;
+		    cursor: pointer;
+		    img {
+		    	margin-right: 12px;
+		    	&.s {
+		    		display: inline-block;
+		    	}
+		    	&.h {
+		    		display: none;
+		    	}
+		    }
+		    a {
+		    	transition: opacity .3s ease-in;
+		    }
+		    .second_menu {
+		    	position: absolute;
+		    	z-index: 9999;
+		    	top: 0;
+		    	left: 100%;
+		    	display: none;
+	    	    border-left: 1px solid @line-color;
+	    	    .second_menu_wrap {
+	    	    	overflow: hidden;
+				    display: table;
+				    padding: 20px 0;
+				    background-color: #fff;
+				    white-space: nowrap;
+				    position: relative;
+				    z-index: 9999;
+				    .second_menu_item {
+				    	display: table-cell;
+					    height: 100%;
+					    border-right: 1px solid @line-color;
+					    font-size: 14px;
+					    li {
+					    	padding: 10px 40px;
+					    	color: @text-color;
+					    	font-size: 14px;
+					    	&:hover {
+					    		color: @primary-color;
+					    	}
+					    }
+					    &:last-child {
+					    	border-right: 0;
+					    } 
+				    }
+	    	    }
+		    }
+		    &.active {
+		    	background-color: @primary-color;
+		    	a {
+		    		color: #fff;
+		    	}
+		    	img {
+		    		&.s {
+		    			display: none;
+		    		}
+		    		&.h {
+		    			display: inline-block;
+		    		}
+		    	}
+		    }
+		    &:hover {
+		    	background-color: @primary-color !important;
+		    	a {
+		    		color: #fff !important;
+		    	}
+		    	img {
+		    		&.s {
+		    			display: none !important;
+		    		}
+		    		&.h {
+		    			display: inline-block !important;
+		    		}
+		    	}
+		    	.second_menu {
+		    		display: block;
+		    	}
+		    }
+    	}
+    }
+    &.show {
+    	width: 220px;
+    	ul.menu {
+    		a {
+				color: @text-color;
+				opacity: 1;
+    		}
+    	}
+    }
+    &.hide {
+    	width: 82px;
+		ul.menu {
+    		a {
+				color: @text-color;
+				opacity: 0;
+    		}
+    	}
+    }
+}

@@ -1,0 +1,31 @@
+.basic_layout {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	.layou_header {
+
+	}
+	.layout_wrapper {
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+		padding: 10px;
+		.layout_wrapper_left {
+			margin-right: 10px;
+		}
+		.layout_wrapper_right {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			.layout_wrapper_nav {
+				margin-bottom: 10px;
+			}
+			.layout_wrapper_content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+}

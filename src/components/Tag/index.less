@@ -1,0 +1,44 @@
+.tag {
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #e8eaec;
+	border-radius: 4px;
+	overflow: hidden;
+	cursor: pointer;
+	position: relative;
+	margin-right: 5px;
+	flex-shrink: 0;
+	.tag_wrapper {
+		height: 32px;
+		padding: 0 34px 0 10px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		.dot {
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background-color: #e8eaec;
+			margin-right: 10px;
+		}
+		.active {
+			background-color: @primary-color;
+		}
+		.text {
+			color: #515a6e;
+			font-size: 14px;
+		}
+	}
+	.close {
+		position: absolute;
+		top: 16px;
+		right: 10px;
+		transform: translateY(-50%)
+	}
+	&:hover {
+		opacity: .85;
+	}
+	&:last-child {
+		margin-right: 0;
+	}
+}

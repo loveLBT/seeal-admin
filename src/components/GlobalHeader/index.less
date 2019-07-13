@@ -1,0 +1,75 @@
+.global_header {
+	height: 66px;
+	background-color: @primary-color;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	.title {
+		cursor: pointer;
+		font-size: 24px;
+		color: #fff;
+		padding: 0;
+		margin: 0 0 0 20px;
+		margin
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		overflow: hidden;
+		white-space: nowrap;
+		transition: .5s ease;
+
+	}
+	.action {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-left: 20px;
+		padding: 0 20px;
+		height: 100%;
+		cursor: pointer;
+		&:hover {
+			background-color: rgba(0,0,0,.1)
+		}
+	}
+	.right {
+		align-self: stretch;
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		margin: 0;
+		padding: 0;
+		li {
+			position: relative;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding:0 20px;
+			span {
+				font-size: 16px; 
+				color: #fff;
+				margin-right: 10px;
+			}
+			&:hover {
+				background-color: rgba(0,0,0,.1)
+			}
+			ul {
+				display: none;
+			    position: absolute;
+			    padding: 12px 0;
+			    right: 0;
+			    top: 66px;
+			    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+			    background-color: #fff;
+			    z-index: 100;
+			    li {
+			    	color: @text-color;
+			    }
+			}
+			&:hover ul {
+				display: block;
+			}
+		}
+	}
+}

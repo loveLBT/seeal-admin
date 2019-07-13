@@ -1,0 +1,78 @@
+html, body, div, ul, li, span, input, p {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+}
+
+#root {
+	width: 100%;
+	min-height: 100%;
+ 	background: #f8f8f9;
+ 	display: flex;
+ 	flex-direction: column;
+}
+
+.page {
+	display: flex;
+	flex-direction: column;
+	flex:1;
+	.page_header {
+		height: 56px;
+		background-color: #fff;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 16px;
+		margin-bottom: 4px;
+		.left {
+			font-size: 14px;
+			font-weight: 700;
+			color: #1c2438;
+		}
+		.right {
+			button {
+				margin-right: 5px;
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+	.page_wrapper {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		padding: 16px;
+		background-color: #fff;
+		.table {
+			.table_row_event {
+				background-color: #fafafa;
+			}
+		}
+	}
+}
