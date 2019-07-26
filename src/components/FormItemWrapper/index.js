@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react'
-import { Input, Select, Cascader } from 'antd'
+import { Input, Select, Cascader, Checkbox } from 'antd'
 import { toJS } from 'mobx'
 
+import TreeSelect from '../../components/TreeSelect'
 import ChinaAddress from '../../utils/ChinaAddress'
 
 const TextArea = Input.TextArea
@@ -15,7 +16,7 @@ const FormItemWrapper = (props, ref) => {
 				<Select
 					ref={ref}
 					{...props} 
-					placeholder={`请输入${data.title}`}
+					placeholder={`请选择${data.title}`}
 				>
 					{data.childrens.map((opt) => 
 						<Select.Option value={opt.value} key={opt.value}>{opt.label}</Select.Option>
@@ -37,6 +38,25 @@ const FormItemWrapper = (props, ref) => {
 				</Select>
 			)
 			break
+		case "mutipleSelect":
+			formItemWrapper = (
+				<Select
+					ref={ref} 
+					value={props.value ? props.value.split(',') : undefined}
+					onChange={(val) => {
+						if(props.onChange) {
+							props.onChange(val.join(','))
+						}
+					}}
+					mode="multiple"
+					placeholder={`直接选择或者搜索${data.title}`}
+				>
+					{data.childrens.map((opt) => 
+						<Select.Option value={opt.value} key={opt.value}>{opt.label}</Select.Option>
+					)}
+				</Select>
+			)
+			break
 		case "textarea":
 			formItemWrapper = (
 				<TextArea 
@@ -48,7 +68,6 @@ const FormItemWrapper = (props, ref) => {
 			)
 			break
 		case "addressSelect": 
-			console.log(toJS(props.value))
 			formItemWrapper = (
 				<Cascader 
 					ref={ref}
@@ -65,6 +84,23 @@ const FormItemWrapper = (props, ref) => {
 						value: "name",
 						children: "list"
 					}}
+				/>
+			)
+			break
+		case "checkbox": 
+			formItemWrapper = (
+				<Checkbox 
+					ref={ref}
+					{...props}
+				/>
+			)
+			break
+		case "treeSelect":
+			formItemWrapper = (
+				<TreeSelect 
+					ref={ref}
+					{...props}
+					data={data.childrens}
 				/>
 			)
 			break

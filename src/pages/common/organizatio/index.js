@@ -52,7 +52,7 @@ class Organizatio extends Component {
 				config.success(res)
 				tableStore.getData()
 			}else{
-				config.fail(res.data)
+				config.fail()
 			}
 		} catch(e) {
 			config.fail(e)
@@ -146,7 +146,7 @@ class Organizatio extends Component {
 						编辑
 					</Button>
 					<Popconfirm
-						title='确认删除该条数据吗？'
+						title='确认注销该条数据吗？'
 						onConfirm={() => organizatioStore.onLogout(record.id)}
 					>
 						<Button style={{marginLeft: '5px'}} size='small'>注销</Button>

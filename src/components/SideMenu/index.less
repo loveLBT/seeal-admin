@@ -5,16 +5,16 @@
     float: left;
     transition: .3s;
     height: 100%;
-    ul.menu {
+    .menu {
     	padding-bottom: 20px;
     	margin: 0;
     	&:hover {
-    		.active {
+    		.menu_item.active {
     			background-color: #fff;
-    			a {
+    			.menu_name {
     				color: @text-color;
     			}
-    			img {
+    			.menu_img {
 		    		&.s {
 		    			display: inline-block;
 		    		}
@@ -24,7 +24,7 @@
 		    	}
     		}
     	}
-    	> li {
+    	.menu_item {
     		position: relative;
     		font-size: 16px;
     		display: flex;
@@ -35,7 +35,7 @@
     		transition: .3s;
 		    white-space: nowrap;
 		    cursor: pointer;
-		    img {
+		   	.menu_img {
 		    	margin-right: 12px;
 		    	&.s {
 		    		display: inline-block;
@@ -44,7 +44,7 @@
 		    		display: none;
 		    	}
 		    }
-		    a {
+		    .menu_name {
 		    	transition: opacity .3s ease-in;
 		    }
 		    .second_menu {
@@ -67,10 +67,11 @@
 					    height: 100%;
 					    border-right: 1px solid @line-color;
 					    font-size: 14px;
-					    li {
+					    .second_menu_name {
 					    	padding: 10px 40px;
 					    	color: @text-color;
 					    	font-size: 14px;
+					    	display: block;
 					    	&:hover {
 					    		color: @primary-color;
 					    	}
@@ -80,13 +81,22 @@
 					    } 
 				    }
 	    	    }
+	    	    &:after {
+			   		position: absolute;
+			   		content: "";
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 15px;
+					box-shadow: 1px 0 6px rgba(0,0,0,.2)
+			    }
 		    }
 		    &.active {
 		    	background-color: @primary-color;
-		    	a {
+		    	.menu_name {
 		    		color: #fff;
 		    	}
-		    	img {
+		    	.menu_img {
 		    		&.s {
 		    			display: none;
 		    		}
@@ -97,10 +107,10 @@
 		    }
 		    &:hover {
 		    	background-color: @primary-color !important;
-		    	a {
+		    	.menu_name {
 		    		color: #fff !important;
 		    	}
-		    	img {
+		    	.menu_img {
 		    		&.s {
 		    			display: none !important;
 		    		}
@@ -116,8 +126,8 @@
     }
     &.show {
     	width: 220px;
-    	ul.menu {
-    		a {
+    	.menu {
+    		.menu_name {
 				color: @text-color;
 				opacity: 1;
     		}
@@ -125,8 +135,8 @@
     }
     &.hide {
     	width: 82px;
-		ul.menu {
-    		a {
+		.menu {
+    		.menu_name {
 				color: @text-color;
 				opacity: 0;
     		}

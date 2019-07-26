@@ -11,18 +11,18 @@ import SearchForm from '../../../components/SearchForm'
 import modalForm from '../../../hoc/modalForm'
 import modalDetail from '../../../hoc/modalDetail'
 
-@inject("roleStore")
+@inject("userStore")
 @modalDetail({
-	formItems: constants.role.modalDetailItems
+	formItems: constants.user.modalDetailItems
 })
 @modalForm({
-	formItems: constants.role.modalFormItems
+	formItems: constants.user.modalFormItems
 })
 @observer
-class Role extends Component {
+class User extends Component {
 	componentDidMount() {
-		const { roleStore } = this.props
-		roleStore.initData()
+		const { userStore } = this.props
+		userStore.initData()
 	}
 	/**
 	 * 新增（不写在store里面是为了给高阶组件modalForm调用此方法）
@@ -30,40 +30,55 @@ class Role extends Component {
 	 * @return {[type]}        [description]
 	 */
 	onModalSave = async (config) => {
-		const { roleStore } = this.props
-		const { tableStore } = roleStore
+		const { userStore } = this.props
+		const { tableStore } = userStore
 		let data = {...config.data}
-		data.parentRoleId = data.parentRole ? data.parentRole.id : undefined
+		data.organizationId = data.organization ? data.organization.id : undefined
 
 		try {
 			const res = await axios({
 				method: data.id ? "put" : "post",
-				url: "/role",
-				data: qs.stringify(data,{allowDots: true})
+				url: "/account",
+				data: qs.stringify(data, {allowDots: true})
 			})
 			if(res.errorCode === "WR000000") {
 				config.success(res)
 				tableStore.getData()
 			}else{
-				config.fail(res.data)
+				config.fail("")
 			}
 		} catch(e) {
 			config.fail(e)
 		}
 	}
 	render() {
-		const { roleStore } = this.props
-		const { tableStore } = roleStore
-
+		const { userStore } = this.props
+		const { tableStore } = userStore
 		const  dropDowmMenu = (
 			<Menu>
 				<Menu.Item 
 					key="0"
 					onClick={() => {
-						roleStore.onRemove(tableStore.selectedRowKeys.slice().join(','))
+						userStore.onStart(tableStore.selectedRowKeys.slice().join(','))
 					}}
 				>
-					批量删除
+					批量启用
+			  </Menu.Item>
+			  <Menu.Item 
+					key="1"
+					onClick={() => {
+						userStore.onStop(tableStore.selectedRowKeys.slice().join(','))
+					}}
+				>
+					批量停用
+			  </Menu.Item>
+			  <Menu.Item 
+					key="2"
+					onClick={() => {
+						userStore.onLogout(tableStore.selectedRowKeys.slice().join(','))
+					}}
+				>
+					批量注销
 			  </Menu.Item>
 			</Menu>
 		)
@@ -79,61 +94,53 @@ class Role extends Component {
 						size='small'
 						onClick={() => {
 							this.props.modalDetail.onOpen({
-								title: "角色详情",
+								title: "查看账户",
 								formData: record
 							})
 						}}
 					>
 						查看
 					</Button>
-					<Button
-						ref={ref=>this[`ref-${record.id}`]=ref} 
+					<Button 
+						ref={ref=>this[`ref-${record.id}`]=ref}
 						style={{marginLeft: '5px'}} 
 						size='small'
 						onClick={async () => {
 							this[`ref-${record.id}`].setState({loading: true})
-							const res = await axios.get(`/role/permission/${record.id}`)
+							const res = await axios.get(`/account/role/${record.id}`)
 							this[`ref-${record.id}`].setState({loading: false})
 
 							if(res.errorCode === "WR000000") {
 								this.props.modalForm.onOpen({
-									title: "编辑角色",
-									formData: {...record,permissionIds:res.data.join(",")},
-									options: roleStore.options
+									title: "编辑账户",
+									formData: {...record, roleIds: res.data.join(",")},
+									options: userStore.options
 								})
 							}
 						}}
 					>
 						编辑
 					</Button>
-					<Popconfirm
-						title='确认删除该条数据吗？'
-						onConfirm={() => {
-							roleStore.onRemove(record.id)
-						}}
-					>
-						<Button style={{marginLeft: '5px'}} size='small'>删除</Button>
-					</Popconfirm>
 				</Fragment>
 			)
 		}
 
 		return (
-			<div className="page organizatio">
+			<div className="page resources">
 				<div className="page_header">
-					<div className="left">角色管理</div>
+					<div className="left">账户管理</div>
 					<div className="right">
 						<Button 
 							onClick={() => {
 								this.props.modalForm.onOpen({
-									title: "新增角色", 
-									options: roleStore.options, 
+									title: "新增账户", 
+									options: userStore.options, 
 									formData: {}
 								})
 							}} 
 							type="primary"
 						>
-							新增角色
+							新增账户
 						</Button>
 						<Dropdown
 							overlay={tableStore.filterColumnsMenu}
@@ -163,8 +170,8 @@ class Role extends Component {
 						onSearch={tableStore.onSearch}
 						onReset={tableStore.onReset}
 						formData={tableStore.formValues}
-						formItems={constants.role.searchFormItems}
-						options={roleStore.options}
+						formItems={constants.user.searchFormItems}
+						options={userStore.options}
 					/>
 
 					<Table 
@@ -185,4 +192,4 @@ class Role extends Component {
 	}
 }
 
-export default Role
+export default User

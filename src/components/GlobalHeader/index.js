@@ -23,7 +23,7 @@ class GloablHeader extends Component {
 					type={isShowMenu ? "menu-fold" : "menu-unfold"} 
 				/>
 				<ul className="right">
-					<li>
+					{/*<li>
 						<span>Jellal</span>
 						<img src={icons.account} alt=""/>
 						<ul>
@@ -37,7 +37,7 @@ class GloablHeader extends Component {
 					</li>
 					<li>
 						<img src={icons.account} alt=""/>
-					</li>
+					</li>*/}
 				</ul>
 			</div>
 		)

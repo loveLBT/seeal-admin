@@ -60,7 +60,9 @@ const ModalForm = (config) => (WrapperComponent) => {
 					 		this.onClose()
 					 	},
 					 	fail: (error) => {
-					 		message.error(error)
+					 		if(error) {
+					 			message.error(error)
+					 		}
 					 		this.setState({loading: false})
 					 	}
 					 })
@@ -127,6 +129,9 @@ const ModalForm = (config) => (WrapperComponent) => {
 										}
 									}else {
 										opts.initialValue = formData[item.dataIndex]
+									}
+									if(item.valuePropName) {
+										opts.valuePropName = item.valuePropName
 									}
 									
 									opts.rules = item.rules || []

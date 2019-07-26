@@ -20,6 +20,9 @@ axios.interceptors.request.use((config)=>{
 })
 
 axios.interceptors.response.use((response)=>{
+	if(response.data.errorCode !== 'WR000000' && response.data.data) {
+		message.error(response.data.data)
+	}
 	return response.data
 }, (error) => {
 	message.error('网络请求失败')

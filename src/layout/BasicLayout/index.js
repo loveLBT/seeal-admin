@@ -5,6 +5,7 @@ import './index.less'
 import GlobalHeader from '../../components/GlobalHeader'
 import NavBar from '../../components/NavBar'
 import SideMenu from '../../components/SideMenu'
+import menus from '../../constants/menus'
 
 @inject("layoutStore")
 @observer
@@ -24,15 +25,14 @@ class BasicLayout extends Component {
 					<div className="layout_wrapper_left">
 						<SideMenu 
 							isShowMenu={layoutStore.isShowMenu} 
+							firstMenus={menus.firstMenus}
+							secondMenus={menus.secondMenus}
 						/>
 					</div>
 					<div className="layout_wrapper_right">
 						<div className="layout_wrapper_nav">
 							<NavBar 
-								onScrollRight={layoutStore.onScrollRight}
-								onScrollLeft={layoutStore.onScrollLeft}
-								scrollNavTabX={layoutStore.scrollNavTabX}
-								onScroll={layoutStore.onScroll}
+								data={menus.secondMenus}
 							/>
 						</div>
 						<div className="layout_wrapper_content">

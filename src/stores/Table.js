@@ -235,7 +235,7 @@ export default class Table {
 					item.key = item.id
 				}
 				this.data = res.data.content
-				this.total = res.totalElements
+				this.total = res.data.totalElements
 			}
 		}catch(err) {
 			this.loading = false

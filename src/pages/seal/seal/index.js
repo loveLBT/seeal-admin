@@ -11,18 +11,18 @@ import SearchForm from '../../../components/SearchForm'
 import modalForm from '../../../hoc/modalForm'
 import modalDetail from '../../../hoc/modalDetail'
 
-@inject("roleStore")
+@inject("sealStore")
 @modalDetail({
-	formItems: constants.role.modalDetailItems
+	formItems: constants.seal.modalDetailItems
 })
 @modalForm({
-	formItems: constants.role.modalFormItems
+	formItems: constants.seal.modalFormItems
 })
 @observer
-class Role extends Component {
+class Seal extends Component {
 	componentDidMount() {
-		const { roleStore } = this.props
-		roleStore.initData()
+		const { sealStore } = this.props
+		sealStore.initData()
 	}
 	/**
 	 * 新增（不写在store里面是为了给高阶组件modalForm调用此方法）
@@ -30,40 +30,56 @@ class Role extends Component {
 	 * @return {[type]}        [description]
 	 */
 	onModalSave = async (config) => {
-		const { roleStore } = this.props
-		const { tableStore } = roleStore
+		const { sealStore } = this.props
+		const { tableStore } = sealStore
 		let data = {...config.data}
-		data.parentRoleId = data.parentRole ? data.parentRole.id : undefined
+		data.organizationId = data.organization ? data.organization.id : undefined
+		data.sealTypeId = data.sealType ? data.sealType.id : undefined
 
 		try {
 			const res = await axios({
 				method: data.id ? "put" : "post",
-				url: "/role",
-				data: qs.stringify(data,{allowDots: true})
+				url: "/seal",
+				data: qs.stringify(data, {allowDots: true})
 			})
 			if(res.errorCode === "WR000000") {
 				config.success(res)
 				tableStore.getData()
 			}else{
-				config.fail(res.data)
+				config.fail()
 			}
 		} catch(e) {
 			config.fail(e)
 		}
 	}
 	render() {
-		const { roleStore } = this.props
-		const { tableStore } = roleStore
-
+		const { sealStore } = this.props
+		const { tableStore } = sealStore
 		const  dropDowmMenu = (
 			<Menu>
 				<Menu.Item 
 					key="0"
 					onClick={() => {
-						roleStore.onRemove(tableStore.selectedRowKeys.slice().join(','))
+						sealStore.onStart(tableStore.selectedRowKeys.slice().join(','))
 					}}
 				>
-					批量删除
+					批量启用
+			  </Menu.Item>
+			  <Menu.Item 
+			  	key="1"
+			  	onClick={() => {
+			  		sealStore.onStop(tableStore.selectedRowKeys.slice().join(','))
+			  	}}
+			  >
+			  	批量停用
+			  </Menu.Item>
+			  <Menu.Item 
+			  	key="2"
+			  	onClick={() => {
+			  		sealStore.onLogout(tableStore.selectedRowKeys.slice().join(','))
+			  	}}
+			  >
+			  	批量注销
 			  </Menu.Item>
 			</Menu>
 		)
@@ -79,41 +95,26 @@ class Role extends Component {
 						size='small'
 						onClick={() => {
 							this.props.modalDetail.onOpen({
-								title: "角色详情",
+								title: "查看印章",
 								formData: record
 							})
 						}}
 					>
 						查看
 					</Button>
-					<Button
-						ref={ref=>this[`ref-${record.id}`]=ref} 
+					<Button 
 						style={{marginLeft: '5px'}} 
 						size='small'
-						onClick={async () => {
-							this[`ref-${record.id}`].setState({loading: true})
-							const res = await axios.get(`/role/permission/${record.id}`)
-							this[`ref-${record.id}`].setState({loading: false})
-
-							if(res.errorCode === "WR000000") {
-								this.props.modalForm.onOpen({
-									title: "编辑角色",
-									formData: {...record,permissionIds:res.data.join(",")},
-									options: roleStore.options
-								})
-							}
+						onClick={() => {
+							this.props.modalForm.onOpen({
+								title: "编辑印章",
+								formData: record,
+								options: sealStore.options
+							})
 						}}
 					>
 						编辑
 					</Button>
-					<Popconfirm
-						title='确认删除该条数据吗？'
-						onConfirm={() => {
-							roleStore.onRemove(record.id)
-						}}
-					>
-						<Button style={{marginLeft: '5px'}} size='small'>删除</Button>
-					</Popconfirm>
 				</Fragment>
 			)
 		}
@@ -121,19 +122,19 @@ class Role extends Component {
 		return (
 			<div className="page organizatio">
 				<div className="page_header">
-					<div className="left">角色管理</div>
+					<div className="left">印章管理</div>
 					<div className="right">
 						<Button 
 							onClick={() => {
 								this.props.modalForm.onOpen({
-									title: "新增角色", 
-									options: roleStore.options, 
+									title: "新增印章", 
+									options: sealStore.options, 
 									formData: {}
 								})
 							}} 
 							type="primary"
 						>
-							新增角色
+							新增印章
 						</Button>
 						<Dropdown
 							overlay={tableStore.filterColumnsMenu}
@@ -163,8 +164,8 @@ class Role extends Component {
 						onSearch={tableStore.onSearch}
 						onReset={tableStore.onReset}
 						formData={tableStore.formValues}
-						formItems={constants.role.searchFormItems}
-						options={roleStore.options}
+						formItems={constants.seal.searchFormItems}
+						options={sealStore.options}
 					/>
 
 					<Table 
@@ -185,4 +186,4 @@ class Role extends Component {
 	}
 }
 
-export default Role
+export default Seal

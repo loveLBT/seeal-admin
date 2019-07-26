@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
 import { Icon } from 'antd'
+import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 
 import './index.less'
 
 class Tag extends Component {
 	static defaultProps = {
-	  isActive: false
+	  isActive: false,
+	  onClose: () => {}
 	}
 	render() {
-		const { isActive } = this.props
+		const { isActive, name, link, onClose } = this.props
 
 		return (
-			<div className="tag">
-				<div className="tag_wrapper">
+			<div 
+				ref={ref=>this.tag=ref} 
+				className="tag"
+			>
+				<Link to={link} className="tag_wrapper">
 					<span className={classnames("dot",{"active": isActive})}></span>
-					<span className="text">公共管理</span>
-				</div>
-				<Icon className="close" style={{color: "#ccc", fontSize: "14px"}} type="close" />
+					<span className="text">{name}</span>
+				</Link>
+				<Icon 
+					className="close" 
+					style={{color: "#ccc", fontSize: "14px"}} 
+					type="close" 
+					onClick={onClose}
+				/>
 			</div>
 		)
 	}
